@@ -1,0 +1,141 @@
+
+<h4 class="title">Procesos</h4>
+
+<div class="container col-sm-10 col-lg-10  tabla3 ">
+  <div class="card">
+    <form [formGroup]="myform" (ngSubmit)="periodo()">
+      <div class="card-header color">Filtro </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 text-center">
+            <div class="row">
+              <label class="filep" for="sel1">Periodo</label>
+              <div class="col-md-9">
+                <div class="form-group">
+                  <input type="month" class="form-control filepb" min="2020-03" formControlName="inpfecha" (change)="periodo()">
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-xs-3 col-sm-4 text-center">
+            <div class="row">
+              <div class="col-md-4 top">  <label class="filep" for="sel1">Grupo</label> </div>
+              <div class="col-md-8 top">
+                <select type="text" class="form-control filepb  " formControlName="grupo" (change)="periodo()">
+                  <!--<option hidden value="">{{this.grupoValue}}</option>-->
+                  <option *ngFor="let grp of this.grupos" [ngValue]="grp.grupoId">
+                    {{grp.grupoNombre}}
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<div class="container col-1 invisible">vacio</div>
+<div class="container col-sm-10 col-lg-10 rounded header scroll ">
+  <!-- [rowData]="rowData | async" -->
+  <ag-grid-angular #agGrid
+                   style="width: 100%; height: 400px;"
+                   class="ag-theme-alpine"
+                   [rowData]="rowData"
+                   [columnDefs]="columnDefs"
+                   [pagination]="true"
+                   [suppressMenuHide]="true"
+                   [localeText]="localeText"
+                   [defaultColDef]="defaultColDef"
+                   [rowSelection]="rowSelection"
+                   [rowMultiSelectWithClick]="true"
+                   (selectionChanged)="onSelectionChanged($event)">
+  </ag-grid-angular>
+
+</div>
+
+<div class="container col-1 invisible">vacio</div>
+<div class="container col-sm-10 col-lg-10 tabla3 ">
+
+  <div *ngIf="calculo" class="alert alert-success aler " role="alert">
+    <p>Se realizo el cálculo correctamente</p>
+  </div>
+  <div *ngIf="txt" class="alert alert-success aler " role="alert">
+    <p>Generacion txt realizada con éxito </p>
+  </div>
+  <div class="card">
+
+    <div class="col-10 ">
+
+      <a class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" (click)="fechaajuste()"
+         [routerLink]="'/Ajustes'">
+        <span class="fas fa-edit" aria-hidden="true"></span>
+        Ajustes
+      </a>
+
+
+      <button *ngIf="valid" type="button" data-toggle="modal" data-target="#exampleModalLong" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-backdrop="false" (click)="ShowCalcular()">
+        <span class="fa fa-calculator" aria-hidden="true"></span> Calcular
+      </button>
+
+      <!-- <button  type="button"  class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" (click)="userad()">
+        <span class="fa fa-calculator"   aria-hidden="true"></span> Usuarios AD
+      </button> -->
+
+    </div>
+
+  </div>
+
+  <div class="container col-1 invisible">vacio</div>
+
+</div>
+
+
+
+
+<div class="container col-1 invisible">vacio</div>
+
+<div *ngIf="showCalcular">
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content tam">
+        <div class="modal-header color">
+          <h6 class="modal-title" id="eliminatitle">Calcular</h6>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-2">
+            <div>
+              <label></label>
+            </div>
+            <label>¿Desea realizar el Calculo?</label>
+          </div>
+          <div *ngIf="alertcalculo" class="alert alert-success aler " role="alert">
+            <p>Se realizo correctamente el Calculo </p>
+          </div>
+          <div *ngIf="errorcalculo" class="alert alert-danger aler " role="alert">
+            <p>Hubo un error en el Calculo, revise e intente nuevamente </p>
+          </div>
+
+        </div>
+        <div class="modal-footer to p ">
+          <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+            <span class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+          </button>
+          <div *ngIf="!errorcalculo && !alertcalculo">
+            <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" (click)="calcular()">
+              <span class="fa fa-check-square" aria-hidden="true"></span>  Confirmar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

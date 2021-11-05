@@ -1,0 +1,193 @@
+<h4 class="title">Empresas</h4>
+
+
+
+<div class="container col-sm-10 col-lg-10 rounded header scroll ">
+
+  <ag-grid-angular #agGrid
+                   style="width: 100%; height: 400px;"
+                   class="ag-theme-alpine"
+                   [rowData]="rowData "
+                   [columnDefs]="columnDefs"
+                   [defaultColDef]="defaultColDef"
+                   [pagination]="true"
+                   [suppressMenuHide]="true"
+                   [localeText] = "localeText"
+                   [rowSelection]="rowSelection"
+                   [rowMultiSelectWithClick]="true"
+                   (selectionChanged)="onSelectionChanged($event)">
+  </ag-grid-angular>
+
+
+</div>
+
+<div class="container col-1 invisible">vacio</div>
+<div class="container col-lg-10 tabla3 ">
+  <div *ngIf="permitido">
+    <div class="card">
+
+      <div class="col-10 ">
+        <button type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#myModal" data-backdrop="false" (click)="showModel()">
+          <span class="fas fa-plus-circle" aria-hidden="true"></span> Agregar
+        </button>
+
+        <button type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#elimina" data-backdrop="false" (click)="showModele()">
+          <span class="fas fa-trash" aria-hidden="true"></span> Eliminar
+        </button>
+
+        <button type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#modifica" data-backdrop="false" (click)="showModelm()">
+          <span class="fas fa-edit" aria-hidden="true"></span> Modificar
+        </button>
+
+      </div>
+    </div>
+    <div class="container col-1 invisible">vacio</div>
+  </div>
+</div>
+  <div class="container col-1 invisible">vacio</div>
+
+  <div *ngIf="showModal">
+    <div id="myModal" class="modal fade">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header color">
+            <h6 class="modal-title" id="eliminatitle">{{title}}</h6>
+          </div>
+          <form [formGroup]="myformA" (ngSubmit)="enviar()">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-4 top">  <label for="sel1">Empresa</label> </div>
+                <div class="col-md-8 top">  <input type="text" class="form-control " formControlName="empresa"></div>
+              </div>
+              <div class="container col-1 invisible">vacio</div>
+              <div class="row">
+                <div class="col-md-4 top">  <label for="sel1">Intercompany</label> </div>
+                <div class="col-md-8 top">  <input type="text" class="form-control" formControlName="intercompany"></div>
+              </div>
+              <div class="container col-1 invisible">vacio</div>
+              <div class="row">
+                <div class="col-md-4 top">  <label for="sel1">Porcenjate</label> </div>
+                <div class="col-md-8 top">  <input type="number" class="form-control" formControlName="porcentaje"></div>
+              </div>
+              <div class="container col-1 invisible">vacio</div>
+              <div *ngIf="success" class="alert alert-success" role="alert">
+                Se grabo correctamente la empresa {{this.myformA.value.empresa}}
+              </div>
+              <div class="modal-footer to p  ">
+                <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+                  <span class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+                </button>
+                <div *ngIf="confirmar">
+                  <button [disabled]="myformA.invalid" type="submit" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep">
+                    <span class="fa fa-check-square" aria-hidden="true"></span>  Confirmar
+                  </button>
+                </div>
+              </div>
+
+              </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="showModeleliminar">
+    <div id="elimina" class="modal fade">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header color">
+            <h6 class="modal-title" id="eliminatitle">{{title}}</h6>
+
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div *ngIf="showMsjemp">
+                <label class="elim">{{msjelim}}</label>
+              </div>
+              <div *ngIf="showMsjemp1">
+                <label class="elim">{{msjelim1}}{{desc}}?</label>
+              </div>
+            </div>
+
+          <div class="container col-1 invisible">vacio</div>
+          <div *ngIf="successe" class="alert alert-success" role="alert">
+            Se elimino la empresa correctamente
+          </div>
+          <div class="modal-footer to p  ">
+            <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+              <span class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+            </button>
+            <div *ngIf="showconf">
+              <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" (click)="enviaelim(id)">
+                <span class="fa fa-check-square" aria-hidden="true"></span>  Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showModelmodificar">
+  <div id="modifica" class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header color">
+          <h6 class="modal-title" id="eliminatitle">{{title}}</h6>
+
+        </div>
+        <div class="modal-body">
+          <div *ngIf="showMsjemp">
+            <label class="elim">{{msjelim}}</label>
+
+          </div>
+          <form [formGroup]="myformM" (ngSubmit)="enviamod()">
+            <div *ngIf="showMsjmod">
+
+              <div class="row">
+                <div class="col-md-4 top">  <label for="sel1">Empresa</label> </div>
+                <div class="col-md-8 top">  <input type="text" class="form-control " value="{{this.empresam}}" formControlName="empresam"></div>
+              </div>
+
+              <div class="container col-1 invisible">vacio</div>
+              <div class="row">
+                <div class="col-md-4 top">  <label for="sel1">Intercompany</label> </div>
+                <div class="col-md-8 top">  <input type="text" class="form-control" value="{{this.intercompanym}}" formControlName="intercompanym"></div>
+              </div>
+              <div class="container col-1 invisible">vacio</div>
+
+              <div class="row">
+                <div class="col-md-4 top">  <label for="sel1">Porcenjate</label> </div>
+                <div class="col-md-8 top">  <input type="number" class="form-control" value="{{this.porcentajem}}" formControlName="porcentajem"></div>
+              </div>
+            </div>
+            <div class="container col-1 invisible">vacio</div>
+            <div *ngIf="successm" class="alert alert-success" role="alert">
+              Se modifico correctamente
+            </div>
+            <div class="modal-footer to p  ">
+              <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+                <span class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+              </button>
+              <div *ngIf="showconfr">
+                <button type="submit" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep">
+                  <span class="fa fa-check-square" aria-hidden="true"></span>  Confirmar
+                </button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+

@@ -1,0 +1,288 @@
+<h4 class="title">Asociacion de Rubros</h4>
+
+<div class="container col-sm-10 col-lg-10 rounded header scroll ">
+  <ag-grid-angular #agGrid
+                   style="width: 100%; height: 400px;"
+                   class="ag-theme-alpine"
+                   [rowData]="rowData "
+                   [columnDefs]="columnDefs"
+                   [defaultColDef]="defaultColDef"
+                   [pagination]="true"
+                   [suppressMenuHide]="true"
+                   [localeText]="localeText"
+                   [rowSelection]="rowSelection"
+                   [rowMultiSelectWithClick]="true"
+                   (selectionChanged)="onSelectionChanged($event)">
+  </ag-grid-angular>
+
+
+</div>
+<!-- </div>  -->
+<div class="container col-1 invisible">vacio</div>
+
+<div class="container col-lg-10 tabla3 ">
+
+  <div class="card">
+
+    <div class="col-10 ">
+
+
+      <!--*ngIf="permitido"-->
+      <button *ngIf="permitido" type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#myModal" data-backdrop="false" (click)="showmodal()">
+        <span class="fas fa-plus-circle" aria-hidden="true"></span> Agregar Asociacion
+
+      </button>
+      <!--*ngIf="permitido"-->
+      <button *ngIf="permitido" type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#elimina" data-backdrop="false" (click)="showmodale()">
+        <span class="fas fa-trash" aria-hidden="true"></span> Eliminar
+      </button>
+
+      <!--*ngIf="permitido"-->
+      <!--<button *ngIf="permitido" type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#modifica" data-backdrop="false" (click)="showModelm()">
+        <span class="fas fa-trash" aria-hidden="true"></span> Modificar
+      </button>-->
+      <!--*ngIf="permitido"-->
+      <button *ngIf="permitido" type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#myModal" data-backdrop="false" (click)="agregarRubro()">
+        <span class="fas fa-tools" aria-hidden="true"></span> Gestion de Sub-Rubros
+      </button>
+
+    </div>
+  </div>
+  <div class="container col-1 invisible">vacio</div>
+</div>
+<div class="container col-1 invisible">vacio</div>
+<!--Agrega-->
+<div *ngIf="showModal">
+  <div id="myModal" class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header color">
+          <h6 class="modal-title" id="eliminatitle">{{title}}</h6>
+        </div>
+        <form [formGroup]="myform" (ngSubmit)="guardar()">
+          <div class="modal-body">
+
+            <div class="row">
+              <div class="col-md-4 top">  <label for="sel1">Rubro cabecera</label> </div>
+              <div class="col-md-8 top">
+                <ng-select formControlName="rubCabecera" placeholder="Seleciona una opción">
+                  <ng-option *ngFor="let rubcabt of this.rubcab" [value]="rubcabt.rubcabCodigo">{{rubcabt.rubcabCodigo}}- {{rubcabt.rubcabDescripcion }}</ng-option>
+                </ng-select>
+
+                <!--[(ngModel)]="selectedRubCabecera"-->
+                <!--<select type="text" class="form-control " formControlName="rubCabecera">
+                  <option hidden value="">Selecciona una opción</option>
+                  <option *ngFor="let rubcabt of this.rubcab" [ngValue]="rubcabt">
+                    {{rubcabt.rubcabCodigo}} -  {{rubcabt.rubcabDescripcion}}
+                </select>-->
+              </div>
+            </div>
+
+            <div class="container col-1 invisible">vacio</div>
+
+            <div class="row">
+              <div class="col-md-4 top">  <label for="sel1">Gran rubro</label> </div>
+              <div class="col-md-8 top">
+                <ng-select formControlName="granRubro" placeholder="Seleciona una opción">
+                  <ng-option *ngFor="let granrubt of this.granrub" [value]="granrubt.granrubCodigo">{{granrubt.granrubCodigo}}- {{granrubt.granrubDescripcion }}</ng-option>
+                </ng-select>
+
+                <!--[(ngModel)]="selectedGranRub"-->
+                <!--<select type="text" class="form-control " formControlName="granRubro">
+                  <option hidden value="">Selecciona una opción</option>
+                  <option *ngFor="let granrubt of this.granrub" [ngValue]="granrubt">
+                    {{granrubt.granrubCodigo}} - {{granrubt.granrubDescripcion}}
+                </select>-->
+              </div>
+            </div>
+
+            <div class="container col-1 invisible">vacio</div>
+
+            <div class="row">
+              <div class="col-md-4 top">  <label for="sel1">Sub-Rubro </label> </div>
+              <div class="col-md-8 top">
+                <ng-select formControlName="subRubro" placeholder="Seleciona una opción">
+                  <ng-option *ngFor="let sub of this.subrubro" [value]="sub.subrubId">{{sub.subrubDescripcion}}</ng-option>
+                </ng-select>
+
+                <!--[(ngModel)]="selectedSubRub"-->
+                <!--<select type="text" class="form-control " formControlName="subRubro">
+                  <option hidden value="">Selecciona una opción</option>
+                  <option *ngFor="let sub of this.subrubro" [ngValue]="sub">
+                    {{sub.subrubDescripcion}}
+                </select>-->
+              </div>
+            </div>
+
+            <div class="container col-1 invisible">vacio</div>
+            <div class="row">
+              <div class="col-md-4 top">  <label for="sel1">Rubro bcra</label> </div>
+              <div class="col-md-8 top">
+                <ng-select formControlName="Rubro" placeholder="Seleciona una opción">
+                  <ng-option *ngFor="let rub of this.rubroselect" [value]="rub.rubCodigo">{{rub.rubCodigo}}- {{rub.rubDescripcion }}</ng-option>
+                </ng-select>
+
+                <!--[(ngModel)]="selectedRubro"-->
+                <!--<select type="text" class="form-control " formControlName="Rubro">
+                  <option hidden value="">Selecciona una opción</option>
+                  <option *ngFor="let rub of this.rubroselect" [ngValue]="rub">
+                    {{rub.rubCodigo}} - {{rub.rubDescripcion}}
+                </select>-->
+              </div>
+            </div>
+
+            <div class="container col-1 invisible">vacio</div>
+
+            <div *ngIf="success" class="alert alert-success" role="alert">
+              La relacion de rubros se grabo correctamente
+            </div>
+            <div *ngIf="error" class="alert alert-danger" role="alert">
+              Relacion existente!
+            </div>
+            <div class="modal-footer to p  ">
+              <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+                <span class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+              </button>
+              <div *ngIf="!confirmarguardar">
+                <button [disabled]="myform.invalid" type="submit" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep">
+                  <span class="fa fa-check-square" aria-hidden="true"></span>  Confirmar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modifica-->
+<!--<div *ngIf="showModalm">
+  <div id="modifica" class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header color">
+          <h6 class="modal-title" id="eliminatitle">{{title}}</h6>
+        </div>
+        <form [formGroup]="myform" (ngSubmit)="guardar()">
+          <div class="modal-body">
+            <div *ngIf="showMsjemp">
+              <label class="elim">{{mesaje}}</label>
+            </div>
+            <div *ngIf="showMsjmod">
+              <div class="row">
+                <div class="col-md-4 top">  <label for="sel1">Subrubro</label> </div>
+                <div class="col-md-8 top">
+                  <select type="text" class="form-control " formControlName="empresa">
+                    <option hidden value="">Selecciona una opción</option>
+                    <option *ngFor="let emp of this.emp" [ngValue]="emp">
+                      {{emp.empDescripcion}}
+                  </select>
+                </div>
+              </div>
+
+              <div class="container col-1 invisible">vacio</div>
+
+              <div class="row">
+                <div class="col-md-4 top">  <label for="sel1">Rubro</label> </div>
+                <div class="col-md-8 top">
+                  <select type="text" class="form-control " formControlName="empresa">
+                    <option hidden value="">Selecciona una opción</option>
+                    <option *ngFor="let emp of this.emp" [ngValue]="emp">
+                      {{emp.empDescripcion}}
+                  </select>
+                </div>
+              </div>
+
+              <div class="container col-1 invisible">vacio</div>
+
+              <div class="row">
+                <div class="col-md-4 top">  <label for="sel1">Gran Rubro</label> </div>
+                <div class="col-md-8 top">
+                  <select type="text" class="form-control " formControlName="empresa">
+                    <option hidden value="">Selecciona una opción</option>
+                    <option *ngFor="let emp of this.emp" [ngValue]="emp">
+                      {{emp.empDescripcion}}
+                  </select>
+                </div>
+              </div>
+
+              <div class="container col-1 invisible">vacio</div>
+              <div class="row">
+                <div class="col-md-4 top">  <label for="sel1">Rubro Cabecera</label> </div>
+                <div class="col-md-8 top">
+                  <select type="text" class="form-control " formControlName="empresa">
+                    <option hidden value="">Selecciona una opción</option>
+                    <option *ngFor="let emp of this.emp" [ngValue]="emp">
+                      {{emp.empDescripcion}}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="container col-1 invisible">vacio</div>
+
+            <div *ngIf="success" class="alert alert-success" role="alert">
+              Se grabo correctamente la asociacion del subrubro
+            </div>
+            <div *ngIf="error" class="alert alert-danger" role="alert">
+              Subrubro ya asociado
+            </div>
+            <div class="modal-footer to p  ">
+              <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+                <span class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+              </button>
+              <div *ngIf="showconf">
+                <button [disabled]="myform.invalid" type="submit" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep">
+                  <span class="fa fa-check-square" aria-hidden="true"></span>  Confirmar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>-->
+<!--Elimina-->
+<div *ngIf="showModale">
+  <div id="elimina" class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header color">
+          <h6 class="modal-title" id="eliminatitle">{{title}}</h6>
+        </div>
+        <div class="modal-body body-modal ">
+          <div *ngIf="eliminar">
+            <label>{{mesaje}}</label>
+          </div>
+
+
+          <div *ngIf="default">
+            <label class="elim">¿{{mesaje}}?</label>
+          </div>
+
+
+
+          <div class="container col-1 invisible">vacio</div>
+          <div *ngIf="successelim" class="alert alert-success" role="alert">
+            La relacion de rubros se elimino correctamente
+          </div>
+          <div *ngIf="success" class="alert alert-success" role="alert">
+            La relacion de rubros se grabo correctamente
+          </div>
+          <div class="modal-footer to p  ">
+            <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+              <span class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+            </button>
+            <div *ngIf="!confirmar">
+              <button type="submit" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" (click)="confirmareliminacion()">
+                <span class="fa fa-check-square" aria-hidden="true"></span>  Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

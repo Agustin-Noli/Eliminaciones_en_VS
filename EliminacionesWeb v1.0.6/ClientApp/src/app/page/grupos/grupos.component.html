@@ -1,0 +1,201 @@
+<h4 class="title">Grupos</h4>
+
+<div class="container col-sm-10 col-lg-10 rounded header scroll ">
+  <ag-grid-angular #agGrid
+                   style="width: 100%; height: 400px;"
+                   class="ag-theme-alpine"
+                   [rowData]="rowData "
+                   [columnDefs]="columnDefs"
+                   [defaultColDef]="defaultColDef"
+                   [pagination]="true"
+                   [suppressMenuHide]="true"
+                   [localeText] = "localeText"
+                   [rowSelection]="rowSelection"
+                   [rowMultiSelectWithClick]="true"
+                   (selectionChanged)="onSelectionChanged($event)">
+  </ag-grid-angular>
+
+
+</div>
+
+<div class="container col-1 invisible">vacio</div>
+<div class="container col-lg-10 tabla3 ">
+
+    <div class="card">
+
+      <div class="col-6 ">
+        <!--*ngIf="permitido"-->
+        <button *ngIf="permitido" type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#myModal" data-backdrop="false" (click)="showModel()">
+          <span class="fas fa-plus-circle" aria-hidden="true"></span> Agregar
+        </button>
+        <!--*ngIf="permitido"-->
+        <button  *ngIf="permitido"type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#elimina" data-backdrop="false" (click)="showModele()">
+          <span class="fas fa-trash" aria-hidden="true"></span> Eliminar
+        </button>
+        <!--*ngIf="permitido"-->
+        <button *ngIf="permitido" type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#modifica" data-backdrop="false" (click)="showModelm()">
+          <span class="fas fa-edit" aria-hidden="true"></span> Modificar
+        </button>
+        <button  type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#grupemp" data-backdrop="false" (click)="showGrupEmp()">
+          <span class="fas fa-random" aria-hidden="true"></span> Asociar Empresa
+        </button>
+
+    </div>
+    </div>
+  <div class="container col-1 invisible">vacio</div>
+</div>
+<div class="container col-1 invisible">vacio</div>
+
+<div *ngIf="showModal">
+  <div id="myModal" class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header color">
+          <h6 class="modal-title" id="eliminatitle">{{title}}</h6>
+        </div>
+        <form [formGroup]="myformA" (ngSubmit)="enviar()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-4 top">  <label for="sel1">Grupo</label> </div>
+              <div class="col-md-8 top">  <input type="text" class="form-control " formControlName="grupo"></div>
+            </div>
+            <div class="container col-1 invisible">vacio</div>
+            <div class="row">
+              <div class="col-md-4 top">  <label for="sel1">Descripcion</label> </div>
+              <div class="col-md-8 top">  <input type="text" class="form-control " formControlName="descripcion"></div>
+            </div>
+            <div class="container col-1 invisible">vacio</div>
+            <div class="container col-1 invisible">vacio</div>
+
+            <div *ngIf="success" class="alert alert-success" role="alert">
+              Se grabo correctamente el grupo {{this.myformA.value.grupo}}
+            </div>
+            <div class="modal-footer to p  ">
+              <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+                <span class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+              </button>
+              <div *ngIf="confiragregar">
+                <button [disabled]="myformA.invalid" type="submit" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep">
+                  <span class="fa fa-check-square" aria-hidden="true"></span>  Confirmar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showModeleliminar">
+  <div id="elimina" class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header color">
+          <h6 class="modal-title" id="eliminatitle">{{title}}</h6>
+
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div *ngIf="showMsjemp">
+              <label class="elim">{{msjelim}}</label>
+            </div>
+            <div *ngIf="showMsjemp1">
+              <label class="elim">{{msjelim1}}{{grupo}}?</label>
+            </div>
+          </div>
+          <div *ngIf="successelim" class="alert alert-success" role="alert">
+            Se elimino correctamente el grupo
+          </div>
+          <div class="container col-1 invisible">vacio</div>
+          <div class="modal-footer to p  ">
+            <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+              <span class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+            </button>
+            <div *ngIf="showconfelim">
+              <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" (click)="enviaelim(id)">
+                <span class="fa fa-check-square" aria-hidden="true"></span>  Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showModelmodificar">
+  <div id="modifica" class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header color">
+          <h6 class="modal-title" id="eliminatitle">{{title}}</h6>
+
+        </div>
+        <form [formGroup]="myformM" (ngSubmit)="enviamod()">
+          <div class="modal-body">
+            <div *ngIf="showMsjemp">
+              <label class="elim">{{msjelim}}</label>
+            </div>
+            <div *ngIf="showMsjmod">
+              <div class="row">
+                <div class="col-md-4 top">  <label for="sel1">Grupo</label> </div>
+                <div class="col-md-8 top">  <input type="text" class="form-control" value="{{this.grupom}}" formControlName="grupom"></div>
+              </div>
+
+
+              <div class="container col-1 invisible">vacio</div>
+              <div class="row">
+                <div class="col-md-4 top">  <label for="sel1">Descripcion</label> </div>
+                <div class="col-md-8 top">  <input type="text" class="form-control" value="{{this.descripcionm}}" formControlName="descripcionm"></div>
+              </div>
+
+            </div>
+            <div class="container col-1 invisible">vacio</div>
+            <div *ngIf="successm" class="alert alert-success" role="alert">
+              Se modifico correctamente
+            </div>
+            <div class="modal-footer to p  ">
+              <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+                <span class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+              </button>
+              <div *ngIf="showconf">
+                <button type="submit" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep">
+                  <span class="fa fa-check-square" aria-hidden="true"></span>  Confirmar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="showgrupemp">
+  <div id="grupemp" class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header color">
+          <label class="modal-title ">{{title}}</label>
+       
+        </div>
+        <div class="modal-body body-modal ">
+          <div class="container col-1 invisible">vacio</div>
+          <div *ngIf="showMsjemp">
+            <label class="elim">{{msjelim}}</label>
+          </div>
+          
+          <div class="container col-1 invisible">vacio</div>
+          <div class="modal-footer to p  ">
+            <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+              <span class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

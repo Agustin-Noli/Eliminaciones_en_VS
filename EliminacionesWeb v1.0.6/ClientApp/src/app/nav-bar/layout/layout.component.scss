@@ -1,0 +1,32 @@
+/* *{
+    font-size: 18px;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #FF6600;
+} */
+
+#navBar {
+    border-bottom: 1px solid black;
+}
+
+
+.centrado{
+    display: block;
+    margin-left: auto;
+    /* margin-right: auto; */
+    margin-top: 5px;
+}
+
+
+.filter{
+    filter: contrast(0.95);
+    
+}
+
+.img{
+    filter: contrast(1.2);
+    opacity: 0.2;
+}

@@ -1,0 +1,139 @@
+<h4 class="title">Asociacion Empresa</h4>
+
+        <div class="container col-sm-10 col-lg-10 rounded header scroll ">
+          <ag-grid-angular
+             #agGrid
+             style="width: 100%; height: 400px;"
+             class="ag-theme-alpine"
+             [rowData]="rowData "
+             [columnDefs]="columnDefs"
+             [defaultColDef]="defaultColDef"
+			       [pagination]="true"
+             [suppressMenuHide]="true"
+             [localeText]="localeText"
+             [rowSelection]="rowSelection"
+             [rowMultiSelectWithClick]="true"
+              (selectionChanged)="onSelectionChanged($event)" 
+             >
+         </ag-grid-angular>  
+         
+     
+         </div>
+          <!-- </div>  -->
+          <div class="container col-1 invisible">vacio</div>
+
+          <div class="container col-lg-10 tabla3 " >
+             
+            <div class="card">
+           
+              <div class="col-10 ">
+
+                <a class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep "
+                   [routerLink]="'/Grupos'">
+                  <span class="fa fa-arrow-left" aria-hidden="true"></span>
+                </a>
+                <!--*ngIf="permitido"-->
+                <button  *ngIf="permitido" type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#myModal" data-backdrop="false" (click)="showmodal()">
+                  <span class="fas fa-plus-circle" aria-hidden="true"></span> Agregar
+
+                </button>
+                <!--*ngIf="permitido"-->
+                <button  *ngIf="permitido"  type="button" class="btn btn-outline-secondary btn-sm col-xs-2 btn-primary-spacing filep" data-toggle="modal" data-target="#elimina" data-backdrop="false" (click)="showmodale()">
+                  <span class="fas fa-trash" aria-hidden="true"></span> Eliminar
+                </button>
+
+              </div>
+            </div>
+            <div class="container col-1 invisible">vacio</div>
+          </div>
+          <div class="container col-1 invisible">vacio</div>
+
+          <div *ngIf="showModal" >
+            <div id="myModal" class="modal fade">
+             <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                 <div class="modal-header color">
+                   <h6 class="modal-title" id="eliminatitle">{{title}}</h6>
+                 </div>
+                 <form [formGroup]="myform" (ngSubmit)="guardar()">
+                   <div class="modal-body">
+
+                     <div class="row">
+                       <div class="col-md-4 top">  <label for="sel1">Empresa</label> </div>
+                       <div class="col-md-8 top">
+                         <select type="text" class="form-control " formControlName="empresa">
+                           <option hidden value="">Selecciona una opción</option>
+                           <option *ngFor="let emp of this.emp" [ngValue]="emp">
+                             {{emp.empDescripcion}}
+                         </select>
+                       </div>
+                     </div>
+
+                     <div class="container col-1 invisible">vacio</div>
+
+                     <div *ngIf="success" class="alert alert-success" role="alert">
+                       Se grabo correctamente la empresa
+                     </div>
+                     <div *ngIf="error" class="alert alert-danger" role="alert">
+                       Empresa ya asociada
+                     </div>
+                     <div class="modal-footer to p  ">
+                       <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+                         <span class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+                       </button>
+                       <div *ngIf="!confirmarguardar">
+                         <button [disabled]="myform.invalid" type="submit" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep">
+                           <span class="fa fa-check-square" aria-hidden="true"></span>  Confirmar
+                         </button>
+                       </div>
+                     </div>
+                   </div>
+                </form>
+               </div>
+             </div>
+          </div> 
+          </div> 
+
+
+          <div *ngIf="showModale" >
+            <div id="elimina" class="modal fade">
+             <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                 <div class="modal-header color">
+                   <h6 class="modal-title" id="eliminatitle">{{title}}</h6>
+                 </div>
+                 <div class="modal-body body-modal ">
+                 <div *ngIf="eliminar">
+                <label>{{mesaje}}</label>
+              </div>
+
+
+              <div  *ngIf="default" > 
+                <label class="elim">¿{{mesaje}}{{msjemp}}?</label>
+               </div>
+             
+
+
+                  <div class="container col-1 invisible">vacio</div>
+                  <div *ngIf="successelim" class="alert alert-success" role="alert">
+                    Se elimino la empresa correctamente
+                   </div>
+                  <div *ngIf="success" class="alert alert-success" role="alert">
+                    Se grabo correctamente la empresa
+                   </div>
+                 <div class="modal-footer to p  ">
+                   <button type="button" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" data-dismiss="modal">
+                     <span  class="fa fa-window-close" aria-hidden="true"></span>  Cerrar
+                   </button>
+                   <div *ngIf="!confirmar">
+                   <button   type="submit" class="btn btn-outline-secondary btn-sm  btn-primary-spacing filep" (click)="confirmareliminacion()"  >
+                     <span  class="fa fa-check-square" aria-hidden="true"></span>  Confirmar
+                   </button>
+                  </div>
+                  </div>
+                </div>
+                 </div>
+             
+               </div>
+             </div>
+           </div> 

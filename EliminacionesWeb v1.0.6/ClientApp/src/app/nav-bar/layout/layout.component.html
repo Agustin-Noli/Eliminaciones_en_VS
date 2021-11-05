@@ -1,0 +1,71 @@
+<nav id="navBar" class="navbar navbar-expand-lg navbar-light bg-light">
+  <div *ngIf="contable">
+  <a  class="navbar-brand" ><img src="../../assets/img/Logo_Banco_Galicia.svg.png" width="211px" height="62px"></a>
+  <!-- [routerLink] = "'/'" -->
+</div>
+<div *ngIf="grupo">
+  <a class="navbar-brand" ><img src="../../assets/img/LOGO_GFG.png" class="filter" width="211px" height="62px"></a>  
+  <!-- [routerLink] = "'/'" -->
+</div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'/Procesos'">Procesos </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'/Reportes'">Reportes </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Informacion
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" [routerLink]="'/Moneda'">Moneda</a>
+          <a class="dropdown-item" [routerLink]="'/Rubros'">Rubros</a>
+          <a class="dropdown-item" [routerLink]="'/Implanillas'">Importacion Planillas</a>
+          <a class="dropdown-item" [routerLink]="'/Historial'">Historial </a>
+        </div>
+      </li>
+
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Configuraciones
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" [routerLink]="'/Grupos'">Grupos</a>
+          <a class="dropdown-item" [routerLink]="'/Empresas'">Empresas</a>
+          <a class="dropdown-item" [routerLink]="'/Usuarios'">Usuarios </a>
+          <a class="dropdown-item" [routerLink]="'/Relacionrubros'">Asociacion de Rubros</a>
+        </div>
+      </li>
+
+
+    </ul>
+    <span class="navbar-text">
+      <div class="row">
+        <div class="col-12"><i class="fas fa-user"></i>&nbsp;Usuario: {{usuario}}</div>
+      </div>
+      <div class="row">
+        <div class="col-12"><i class="fas fa-id-card-alt"></i>&nbsp;Perfil: {{perfil}}</div>
+      </div>
+      <div class="row">
+        <div class="col-12"><i class="fa fa-users"></i>&nbsp;Sector: {{sector}}</div>
+      </div>
+
+    </span>
+  </div>
+</nav>
+
+
+
+<div *ngIf="this.procesosServ.logo" class="container img">
+   
+ <img src="../../assets/img/gal2.JPG" alt="Coche" style="width:50%;MARGIN-TOP: 100PX;" class="mx-auto d-block ">
+ </div>

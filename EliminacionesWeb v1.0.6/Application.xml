@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<config>
+  <map>
+    <application id="ELIMINACIONES_WEB" alias="ELIMINIACIONESapp" />
+    <resources>
+      <resource id="BD_ELIMINACIONES_WEB" alias="BD_ELIMINACIONES"/>
+    </resources>
+  </map>
+</config>
